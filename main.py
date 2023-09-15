@@ -40,7 +40,7 @@ async def main():
         fermerLumiere = await fermerLumiere_node.read_value()
         await fermerLumiere_node.write_value(not fermerLumiere)
         print("Lumières fermées : " + str(fermerLumiere))
-        if (fermerLumiere == True):
+        if fermerLumiere == True:
             await rouge_node.write_value(True)
             await blue_node.write_value(True)
             await green_node.write_value(True)
@@ -63,18 +63,17 @@ async def main():
 
     async with server:
 
-            while True:
-                # Read the values of the OPC UA variables
-                red_value = await rouge_node.read_value()
-                green_value = await green_node.read_value()
-                blue_value = await blue_node.read_value()
+        while True:
+            # Read the values of the OPC UA variables
+            red_value = await rouge_node.read_value()
+            green_value = await green_node.read_value()
+            blue_value = await blue_node.read_value()
 
-                # Update the GPIO pins based on the variable values
-                GPIO.output(light_pin_red, red_value)
-                GPIO.output(light_pin_green, green_value)
-                GPIO.output(light_pin_blue, blue_value)
-                await asyncio.sleep(0.1)
-
+            # Update the GPIO pins based on the variable values
+            GPIO.output(light_pin_red, red_value)
+            GPIO.output(light_pin_green, green_value)
+            GPIO.output(light_pin_blue, blue_value)
+            await asyncio.sleep(0.1)
 
 
 if __name__ == "__main__":
